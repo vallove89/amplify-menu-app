@@ -15,7 +15,10 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
             data: file,
             path: file.name,
             options: {
-                bucket: 'pictureBucket'
+                bucket: {
+                    bucketName: 'picture',
+                    region: 'us-east-1'
+                }
             }
         }).result;
         console.log("Succeded: ", result);
@@ -29,7 +32,10 @@ async function handleDownload() {
         const result = await getUrl({
             path: 'buck01.jpg',
             options: {
-                bucket: 'pictureBucket'
+                bucket: {
+                    bucketName: 'picture',
+                    region: 'us-east-1'
+                }
             }
         });
         console.log("Success", result);
@@ -44,7 +50,10 @@ async function handleRemove() {
         const result = await remove({
             path: 'buck01.jpg',
             options: {
-                bucket: 'pictureBucket'
+                bucket: {
+                    bucketName: 'picture',
+                    region: 'us-east-1'
+                }
             }
         });
         console.log('Success remove: ', result);
