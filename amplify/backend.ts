@@ -1,11 +1,15 @@
 import { defineBackend } from '@aws-amplify/backend';
 import { auth } from './auth/resource';
 import { data } from './data/resource';
-import { pictureBucket, publicPictureBucket } from './storage/resource';
 
-defineBackend({
+const backend = defineBackend({
   auth,
   data,
-  pictureBucket,
-  publicPictureBucket
+});
+
+backend.addOutput({
+  storage: {
+    aws_region: "us-east-1",
+    bucket_name: "vals-test-image-bucket"
+  }
 });

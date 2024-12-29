@@ -14,12 +14,6 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
         const result = await uploadData({
             data: file,
             path: file.name,
-            options: {
-                bucket: {
-                    bucketName: 'picture',
-                    region: 'us-east-1'
-                }
-            }
         }).result;
         console.log("Succeded: ", result);
     } catch (e) {
@@ -30,13 +24,7 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
 async function handleDownload() {
     try {
         const result = await getUrl({
-            path: 'buck01.jpg',
-            options: {
-                bucket: {
-                    bucketName: 'picture',
-                    region: 'us-east-1'
-                }
-            }
+            path: 'buck01.jpg'
         });
         console.log("Success", result);
     } catch (err) {
@@ -48,13 +36,7 @@ async function handleDownload() {
 async function handleRemove() {
     try{
         const result = await remove({
-            path: 'buck01.jpg',
-            options: {
-                bucket: {
-                    bucketName: 'picture',
-                    region: 'us-east-1'
-                }
-            }
+            path: 'buck01.jpg'
         });
         console.log('Success remove: ', result);
     } catch (err) {
