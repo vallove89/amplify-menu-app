@@ -14,6 +14,9 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
         const result = await uploadData({
             data: file,
             path: file.name,
+            options: {
+                bucket: "userImage"
+            }
         }).result;
         console.log("Succeded: ", result);
     } catch (e) {
@@ -24,7 +27,10 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
 async function handleDownload() {
     try {
         const result = await getUrl({
-            path: 'buck01.jpg'
+            path: 'easy.jpg',
+            options: {
+                bucket: "userImage"
+            }
         });
         console.log("Success", result);
     } catch (err) {
@@ -36,12 +42,31 @@ async function handleDownload() {
 async function handleRemove() {
     try{
         const result = await remove({
-            path: 'buck01.jpg'
+            path: 'easy.jpg',
+            options: {
+                bucket: "userImage"
+            }
         });
         console.log('Success remove: ', result);
     } catch (err) {
         console.log('Error: ',err);
     }
+}
+
+async function handleList() {
+    try {
+        const result = await list({
+            path: '',
+            options: {
+                listAll: true,
+                bucket: "userImage"
+            }
+        });
+        console.log('Success return list', result);
+    } catch (error) {
+        console.log('Error returning list', error);
+    }
+    
 }
 
 export default function PictureSubmissions() {
@@ -55,6 +80,7 @@ export default function PictureSubmissions() {
             <Link href="/">Back to Home</Link>
             <button onClick={handleDownload}>Download</button>
             <button onClick={handleRemove}>Remove</button>
+            <button onClick={handleList}>Return List</button>
         </div>
     )
 }

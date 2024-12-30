@@ -13,3 +13,11 @@ backend.addOutput({
     bucket_name: "vals-test-image-bucket"
   }
 });
+
+backend.addOutput({
+  storage: {
+    aws_region: "us-east-1",
+    bucket_name: "vals-test-image-bucket-resized"
+  }
+});
+
