@@ -15,7 +15,7 @@ async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
             data: file,
             path: file.name,
             options: {
-                bucket: "userImage"
+                bucket: "publicImage"
             }
         }).result;
         console.log("Succeded: ", result);
