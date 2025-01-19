@@ -56,8 +56,6 @@ export default function App() {
         </a>
       </div>
       <button onClick={signOut}>Sign out</button>
-      <Link href="/picture-submissions">Picture Submission</Link>
-      <Link href="/public">Public Picture</Link>
       <Link href="/dashboard">Dashboard</Link>
     </main>
   );

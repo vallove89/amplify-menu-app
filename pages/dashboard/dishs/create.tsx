@@ -12,7 +12,6 @@ export default function CreateDishPage() {
     const [name, setName] = useState<string>("");
     const [price, setPrice] = useState<number | string>("");
     const [description, setDescription] = useState<string>("");
-    const [imageUrl, setImageUrl] = useState('');
   
     const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
       e?.preventDefault();
@@ -24,7 +23,6 @@ export default function CreateDishPage() {
             userId: user,
             name: name,
             description: description,
-            imageUrl: imageUrl,
             price: numericPrice,
         })
       
@@ -34,8 +32,7 @@ export default function CreateDishPage() {
         setName('');
         setPrice('');
         setDescription('');
-        setImageUrl('');
-        
+
       } catch(error) {
         console.log('Error creating drink: ',error);
       };
@@ -56,13 +53,13 @@ export default function CreateDishPage() {
   
     return (
       <ItemForm
-      name={name}
-      setName={setName}
-      price={price}
-      setPrice={setPrice}
-      description={description}
-      setDescription={setDescription}
-      handleSubmit={handleSubmit}
+        name={name}
+        setName={setName}
+        price={price}
+        setPrice={setPrice}
+        description={description}
+        setDescription={setDescription}
+        handleSubmit={handleSubmit}
     />
   );
 }

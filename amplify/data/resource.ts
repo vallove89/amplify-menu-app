@@ -32,7 +32,7 @@ const schema = a.schema({
     userId: a.id().required(),
     name: a.string().required(),
     description: a.string(),
-    category: a.boolean().default(false),
+    alcohol: a.boolean().default(false),
     price: a.float(),
     imageUrl: a.string(),
     submenus: a.hasMany("SubmenuDrink","drinkId")
@@ -76,6 +76,8 @@ const schema = a.schema({
     id: a.id().required(),
     userId: a.id().required(),
     title: a.string().required(),
+    description: a.string(),
+    imageUrl: a.string(),
     submenus: a.hasMany("MenuSubmenu", "menuId")
   })
   .authorization((allow) => [

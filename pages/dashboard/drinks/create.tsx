@@ -3,37 +3,36 @@ import Link from 'next/link';
 import { generateClient } from 'aws-amplify/data';
 import { type Schema } from '../../../amplify/data/resource';
 import { getCurrentUser } from 'aws-amplify/auth';
-
-interface Price {
-    price: string;
-    unit: string;
-}
-
+import ItemForm from '@/components/ItemForm';
 
 const client = generateClient<Schema>();
 
 export default function CreateDrinkPage() {
     const [user, setUser] = useState('');
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [category, setCategory] = useState(false);
-    const [price, setPrice] = useState('');
+    const [name, setName] = useState<string>("");
+    const [price, setPrice] = useState<number | string>("");
+    const [description, setDescription] = useState<string>("");
   
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+    const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
+      e?.preventDefault();
       try {
+
+        const numericPrice = typeof price === "string" ? parseFloat(price) : price;
 
         const { data } = await client.models.Drink.create({
             userId: user,
             name: name,
             description: description,
-            imageUrl: imageUrl,
-            category: category,
-            price: parseFloat(price),
+            price: numericPrice,
         })
+      
 
         console.log('Successfully created new drink: ', data);
+
+        setName('');
+        setPrice('');
+        setDescription('');
+
       } catch(error) {
         console.log('Error creating drink: ',error);
       };
@@ -53,62 +52,14 @@ export default function CreateDrinkPage() {
     }, []);
   
     return (
-      <form onSubmit={handleSubmit} className="drink-form">
-        <div>
-          <label>
-            Name:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        
-        <div>
-          <label>
-            Description:
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-        </div>
-  
-        <div>
-          <label>
-            Image URL:
-            <input
-              type="text"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
-          </label>
-        </div>
-  
-        <div>
-          <label>
-            Category (Alcoholic):
-            <input
-              type="checkbox"
-              checked={category}
-              onChange={(e) => setCategory(e.target.checked)}
-            />
-          </label>
-        </div>
-  
-        <div>
-          <label>Price:</label>
-          <input
-                type="number"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-        </div>
-  
-        <button type="submit">Create Drink</button>
-      </form>
-    );
-  }
+      <ItemForm
+        name={name}
+        setName={setName}
+        price={price}
+        setPrice={setPrice}
+        description={description}
+        setDescription={setDescription}
+        handleSubmit={handleSubmit}
+    />
+  );
+}

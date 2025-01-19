@@ -7,9 +7,6 @@ export default function DashboardPage() {
         <div>
             <h1>Dashboard</h1>
             <div>
-                <Link href="/dashboard/images">Image&apos;s ...</Link>
-            </div>
-            <div>
                 <Link href="/dashboard/dishs">Dish&apos;s ...</Link>
             </div>
             <div>
@@ -17,9 +14,6 @@ export default function DashboardPage() {
             </div>
             <div>
                 <Link href="/dashboard/menus">Menu&apos;s ...</Link>
-            </div>
-            <div>
-                <Link href="/dashboard/locations">Location&apos;s ...</Link>
             </div>
             <div>
                 <Link href="/dashboard/sides">Side&apos;s ...</Link>

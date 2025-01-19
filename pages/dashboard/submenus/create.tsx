@@ -10,7 +10,6 @@ export default function CreateSubmenuPage() {
     const [user, setUser] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
   
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -20,7 +19,6 @@ export default function CreateSubmenuPage() {
             userId: user,
             title: title,
             description: description,
-            imageUrl: imageUrl,
         })
 
         console.log('Successfully created new drink: ', data);
@@ -65,17 +63,7 @@ export default function CreateSubmenuPage() {
             />
           </label>
         </div>
-  
-        <div>
-          <label>
-            Image URL:
-            <input
-              type="text"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
-          </label>
-        </div>
+
         <div>
             <h4>Menu</h4>
             <button>Add New</button>
