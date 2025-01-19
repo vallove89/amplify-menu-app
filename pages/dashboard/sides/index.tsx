@@ -7,6 +7,8 @@ export default function SidesPage() {
         <div>
             <h1>Sides</h1>
             <Link href="/dashboard">Go back to dashboard</Link>
+            <br />
+            <Link href="/dashboard/sides/create">Create Side</Link>
         </div>
     )
 }

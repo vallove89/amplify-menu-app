@@ -1,6 +1,7 @@
 import { uploadData,getUrl, remove, list } from 'aws-amplify/storage';
 import '@aws-amplify/ui-react/styles.css';
 import Link from 'next/link';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 async function handleOnSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -69,6 +70,15 @@ async function handleList() {
     
 }
 
+async function  handleAuth() {
+    try {
+        const user = await getCurrentUser();
+        console.log('user: ',user);
+    } catch(error) {
+        console.log('error returning current user: ',error);
+    }
+}
+
 export default function PictureSubmissions() {
     return (
         <div>
@@ -81,6 +91,7 @@ export default function PictureSubmissions() {
             <button onClick={handleDownload}>Download</button>
             <button onClick={handleRemove}>Remove</button>
             <button onClick={handleList}>Return List</button>
+            <button onClick={handleAuth}>Auth</button>
         </div>
     )
 }
