@@ -25,7 +25,7 @@ const schema = a.schema({
     imageUrl: a.string(),
     priceOption: a.ref('Price').array(),
     category: a.enum(['STARTERS', 'ENTREES', 'SIDES', 'DESSERTS', 'DRINKS_NON_ALCOHOLIC', 'DRINKS_ALCOHOLIC']),
-    submenus: a.hasMany("SubmenuItem","dishId")
+    submenus: a.hasMany("Submenu","itemId")
   })
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
