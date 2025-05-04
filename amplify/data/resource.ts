@@ -8,48 +8,24 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+    Todo: a
     .model({
       content: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
-  Dish: a.model({
+    Price: a.customType({
+      label: a.string(),
+      price: a.float(),
+    }),
+    Item: a.model({
     id: a.id().required(),
     userId: a.id().required(),
     name: a.string().required(),
     description: a.string(),
-    price: a.float(),
     imageUrl: a.string(),
-    submenus: a.hasMany("SubmenuDish","dishId")
-  })
-  .authorization((allow) => [
-    allow.publicApiKey().to(['read']),
-    allow.owner(),
-  ]),
-  Drink: a
-  .model({
-    id: a.id().required(),
-    userId: a.id().required(),
-    name: a.string().required(),
-    description: a.string(),
-    alcohol: a.boolean().default(false),
-    price: a.float(),
-    imageUrl: a.string(),
-    submenus: a.hasMany("SubmenuDrink","drinkId")
-  })
-  .authorization((allow) => [
-    allow.publicApiKey().to(['read']),
-    allow.owner(),
-  ]),
-  Side: a
-  .model({
-    id: a.id().required(),
-    userId: a.id().required(),
-    name: a.string().required(),
-    description: a.string(),
-    price: a.float(),
-    imageUrl: a.string(),
-    submenus: a.hasMany("SubmenuSide","sideId")
+    priceOption: a.ref('Price').array(),
+    category: a.enum(['STARTERS', 'ENTREES', 'SIDES', 'DESSERTS', 'DRINKS_NON_ALCOHOLIC', 'DRINKS_ALCOHOLIC']),
+    submenus: a.hasMany("SubmenuItem","dishId")
   })
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
@@ -63,9 +39,7 @@ const schema = a.schema({
     description: a.string(),
     imageUrl: a.string(),
     menus: a.hasMany("MenuSubmenu","submenuId"),
-    dishs: a.hasMany("SubmenuDish","submenuId"),
-    sides: a.hasMany("SubmenuSide","submenuId"),
-    drinks: a.hasMany("SubmenuDrink","submenuId")
+    items: a.hasMany("SubmenuItem","submenuId"),
   })
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
@@ -75,7 +49,7 @@ const schema = a.schema({
   .model({
     id: a.id().required(),
     userId: a.id().required(),
-    title: a.string().required(),
+    name: a.string().required(),
     description: a.string(),
     imageUrl: a.string(),
     submenus: a.hasMany("MenuSubmenu", "menuId")
@@ -95,35 +69,13 @@ const schema = a.schema({
     allow.publicApiKey().to(['read']),
     allow.owner(),
   ]),
-  SubmenuDish: a
+  SubmenuItem: a
   .model({
     submenuId: a.id().required(),
-    dishId: a.id().required(),
+    itemId: a.id().required(),
     submenu: a.belongsTo("Submenu","submenuId"),
-    dish: a.belongsTo("Dish","dishId")
+    item: a.belongsTo("Item","itemId")
   })
-  .authorization((allow) => [
-    allow.publicApiKey().to(['read']),
-    allow.owner(),
-  ]),
-  SubmenuSide: a
-  .model({
-    submenuId: a.id().required(),
-    sideId: a.id().required(),
-    submenu: a.belongsTo("Submenu","submenuId"),
-    side: a.belongsTo("Side","sideId")
-  })
-  .authorization((allow) => [
-    allow.publicApiKey().to(['read']),
-    allow.owner(),
-  ]),
-  SubmenuDrink: a
-  .model({
-    submenuId: a.id().required(),
-    drinkId: a.id().required(),
-    submenu: a.belongsTo("Submenu","submenuId"),
-    drink: a.belongsTo("Drink","drinkId")
-  })  
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
     allow.owner(),
@@ -135,11 +87,11 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "userPool",
+    //defaultAuthorizationMode: "userPool",
     // API Key is used for a.allow.public() rules
-    apiKeyAuthorizationMode: {
-      expiresInDays: 30,
-    },
+    //apiKeyAuthorizationMode: {
+    //  expiresInDays: 30,
+    //},
   },
 });
 
