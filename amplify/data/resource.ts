@@ -18,13 +18,14 @@ const schema = a.schema({
       price: a.float(),
     }),
     Item: a.model({
-    id: a.id().required(),
-    userId: a.id().required(),
-    name: a.string().required(),
-    description: a.string(),
-    imageUrl: a.string(),
-    priceOption: a.ref('Price').array(),
-    category: a.enum(['STARTERS', 'ENTREES', 'SIDES', 'DESSERTS', 'DRINKS_NON_ALCOHOLIC', 'DRINKS_ALCOHOLIC']),
+      id: a.id().required(),
+      userId: a.id().required(),
+      name: a.string().required(),
+      description: a.string(),
+      imageUrl: a.string(),
+      priceOption: a.ref('Price').array(),
+      category: a.enum(['STARTERS', 'ENTREES', 'SIDES', 'DESSERTS', 'DRINKS_NON_ALCOHOLIC', 'DRINKS_ALCOHOLIC']),
+      submenus: a.hasMany('SubmenuItem','itemId'),
   })
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
@@ -38,7 +39,7 @@ const schema = a.schema({
     description: a.string(),
     imageUrl: a.string(),
     menus: a.hasMany("MenuSubmenu","submenuId"),
-    items: a.hasMany("SubmenuItem","submenuId"),
+    submenus: a.hasMany("SubmenuItem","submenuId"),
   })
   .authorization((allow) => [
     allow.publicApiKey().to(['read']),
